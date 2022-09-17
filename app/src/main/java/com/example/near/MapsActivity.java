@@ -65,7 +65,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             checkLocationPermission();
         }
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -74,14 +73,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @SuppressLint("MissingSuperCall")
     @Override
 
-    //for handling permission request response
+   
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode)
         {
             case REQUEST_LOCATION_CODE :
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
-                    //permission is granted
+                   
                     if(ContextCompat.checkSelfPermission(this , Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
                     {
                         if (client == null)
@@ -96,7 +95,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 else
                 {
-                    //permisison is denied
+                    
 
                     Toast.makeText(this , "Permission Denied" , Toast.LENGTH_LONG).show();
                 }
@@ -106,18 +105,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+  
     @Override
 
-    //called whenever the map is ready to use
+    
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
@@ -133,7 +124,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     protected synchronized void buildGoogleApiClient() {
 
-        //create a GoogleApiClient and connect it
+    
 
         client = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -143,7 +134,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         client.connect();
 
-        //call this method inside OnMapReady()
+     
 
 
     }
@@ -153,29 +144,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         lastLocation = location;
 
-        //remove the marker if already set to some other place
+      
 
         if(currentLocationMarker != null) {
             currentLocationMarker.remove();
         }
 
-        //get he lat and lon to set the marker to it
 
         LatLng latLng = new LatLng(location.getLatitude() , location.getLongitude());
 
-        MarkerOptions markerOptions = new MarkerOptions(); //to set properties to that marker
+        MarkerOptions markerOptions = new MarkerOptions(); 
         markerOptions.position(latLng);
         markerOptions.title("CURRENT LOCATION");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
         currentLocationMarker = mMap.addMarker(markerOptions);
 
-        //now we need to move camera to that loaction
+        
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomBy(5));
 
-        //stop the location update once it is set
 
         if(client!=null) {
 
@@ -189,7 +178,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onClick(View v)
     {
         Object dataTransfer[] = new Object[2];
-        //first object will be mMap , scnd will be url
+      
 
         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
 
@@ -205,8 +194,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 MarkerOptions mo = new MarkerOptions();
 
                 if (!location.equals("")) {
-                    //if no an empty string
-                    //use geocoder class here
+                   
 
                     Geocoder geocoder = new Geocoder(this);
                     try {
@@ -215,7 +203,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         e.printStackTrace();
                     }
 
-                    //search for a particular loaction ; put a marker on those 2 3 result addresses it gives
 
                     for (int i = 0; i < addressList.size(); i++) {
                         Address myAddress = addressList.get(i);
@@ -235,7 +222,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             break;
 
             case R.id.B_Hospital :
-                mMap.clear(); //remove all the markers from the map
+                mMap.clear(); 
                 String hospital = "hospital";
                 String url = getUrl(latitude , longitude , hospital);
 
@@ -250,7 +237,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             case R.id.B_Restaurant :
 
-                mMap.clear(); //remove all the markers from the map
+                mMap.clear(); 
                 String restaurant = "restaurant";
                 url = getUrl(latitude , longitude , restaurant);
 
@@ -264,7 +251,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             case R.id.B_School :
 
-                mMap.clear(); //remove all the markers from the map
+                mMap.clear(); 
                 String school = "school";
                 url = getUrl(latitude , longitude , school);
 
@@ -300,7 +287,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationRequest.setFastestInterval(1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
-        //use fusedloaction api to get the current location
+        
 
         if(ContextCompat.checkSelfPermission(this , Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(client , locationRequest , this);
@@ -310,7 +297,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public boolean checkLocationPermission() {
 
-        //check if permission is granted or not
+      
 
         if(ContextCompat.checkSelfPermission(this , Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this , Manifest.permission.ACCESS_FINE_LOCATION)) {
