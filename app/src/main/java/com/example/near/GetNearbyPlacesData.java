@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by kats on 3/25/18.
- */
 
 public class GetNearbyPlacesData extends AsyncTask<Object , String , String> {
 
@@ -28,7 +25,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object , String , String> {
         mMap = (GoogleMap)objects[0];
         url = (String)objects[1];
 
-        //create an object of download URL class
+   
 
         DownloadURL downloadURL = new DownloadURL();
         try {
@@ -56,8 +53,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object , String , String> {
     {
         for(int i=0;i<nearbyPlaceList.size();i++)
         {
-            //show all the places in the list
-            //we are going to create marker options
+          
 
             MarkerOptions markerOptions = new MarkerOptions();
             HashMap<String,String> googlePlace = nearbyPlaceList.get(i);
