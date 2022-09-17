@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by kats on 3/25/18.
- */
+
 
 public class DataParser {
 
@@ -17,7 +15,7 @@ public class DataParser {
     {
         HashMap<String , String> googlePlacesMap = new HashMap<>();
 
-        //store all the parameters using String
+ 
 
         String placeName = "-NA-";
         String vicinity = "-NA-";
@@ -53,25 +51,22 @@ public class DataParser {
 
         return googlePlacesMap;
 
-        //to store one place we are using a HashMap
+       
     }
 
 
-    //to store all the places create a list of HashMap
     private List<HashMap<String,String>> getPlaces(JSONArray jsonArray)
     {
 
-        //getPlace returns a HashMap for each place
-        //getPlaces() creates a list of HashMaps
+   
 
         int count = jsonArray.length();
         List<HashMap<String,String>> placesList = new ArrayList<>();
-        HashMap<String,String> placeMap = null; //to store each place we fetch
+        HashMap<String,String> placeMap = null; 
 
         for(int i=0 ; i<count;i++) {
 
-            //use getPlace method to fetch one place
-            //then , add it to list of hashmap
+           
 
             try {
                 placeMap = getPlace((JSONObject) jsonArray.get(i));
@@ -87,12 +82,7 @@ public class DataParser {
         return placesList;
     }
 
-    //call this parse method whenever you create Data Parser
-    //it will parse the JSON data n send it to getPlaces method
-    //getPlaces method takes the JSONArray
-    //will call getPlace method to fetch each element for each place and store it in a list
-    //return the list to parse method
-
+    
     public List<HashMap<String,String>> parse(String jsonData)
     {
         JSONArray jsonArray = null;
